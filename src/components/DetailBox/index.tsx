@@ -1,12 +1,12 @@
 import {View, Text} from "react-native";
 
-type DetailBoxPropsType = {
+type DetailBoxProps = {
   price: number;
   name: string;
   quantity: string;
 };
 
-const DetailBox = ({price, name, quantity}: DetailBoxPropsType) => {
+const DetailBox = ({price, name, quantity}: DetailBoxProps) => {
   return (
     <View
       style={{

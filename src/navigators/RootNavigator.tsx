@@ -8,7 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 const Tab = createBottomTabNavigator();
 
 const RootNavigator = () => {
-  const CustomTabBarButton = ({children}: any) => {
+  const CustomTabBarButton = () => {
     return (
       <TouchableOpacity
         style={{

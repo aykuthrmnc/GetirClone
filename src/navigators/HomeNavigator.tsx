@@ -1,5 +1,5 @@
 import {createStackNavigator} from "@react-navigation/stack";
-import {Image, Text, TouchableOpacity} from "react-native";
+import {Dimensions, Image, Text, TouchableOpacity, View} from "react-native";
 import CategoryFilterScreen from "screens/CategoryFilterScreen";
 import HomeScreen from "screens/HomeScreen";
 import ProductDetailsScreen from "screens/ProductDetailsScreen";
@@ -11,6 +11,9 @@ import {
   getFocusedRouteNameFromRoute,
 } from "@react-navigation/native";
 import {useLayoutEffect} from "react";
+import CartScreen from "screens/CartScreen";
+
+const {width} = Dimensions.get("window");
 
 const tabHiddenRoutes = ["ProductDetails", "CartScreen"];
 
@@ -61,6 +64,39 @@ const HomeNavigator = ({
               Ürünler
             </Text>
           ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("CartScreen")}
+              style={{
+                width: width * 0.22,
+                height: 33,
+                backgroundColor: "white",
+                marginRight: width * 0.03,
+                borderRadius: 9,
+                flexDirection: "row",
+                alignItems: "center",
+              }}>
+              <Image
+                source={require("~/assets/cart.png")}
+                style={{width: 23, height: 23, marginLeft: 6, marginRight: 3}}
+              />
+              <View
+                style={{
+                  flex: 1,
+                  height: 33,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderTopRightRadius: 9,
+                  borderBottomRightRadius: 9,
+                  backgroundColor: "#F3EFFE",
+                }}>
+                <Text
+                  style={{color: "#5D3EBD", fontWeight: "bold", fontSize: 12}}>
+                  ₺24,00
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen
@@ -88,6 +124,33 @@ const HomeNavigator = ({
               onPress={() => navigation.goBack()}
               style={{paddingRight: 12}}>
               <Foundation name="heart" size={24} color="#32177A" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+        options={{
+          headerTintColor: "white",
+          headerBackTitleVisible: false,
+          headerTitleAlign: "center",
+          headerStyle: {backgroundColor: "#5C3EBC"},
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{paddingLeft: 12}}>
+              <Ionicons name="close" size={24} color="white" />
+            </TouchableOpacity>
+          ),
+          headerTitle: () => (
+            <Text style={{fontWeight: "bold", fontSize: 15, color: "white"}}>
+              Sepetim
+            </Text>
+          ),
+          headerRight: () => (
+            <TouchableOpacity style={{paddingRight: 12}}>
+              <Ionicons name="trash" size={24} color="white" />
             </TouchableOpacity>
           ),
         }}

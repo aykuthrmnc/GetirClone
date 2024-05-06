@@ -5,11 +5,11 @@ import Entypo from "react-native-vector-icons/Entypo";
 
 const {height, width} = Dimensions.get("window");
 
-type ProductItemType = {
+type ProductItemProps = {
   item: Product;
 };
 
-const ProductItem = ({item}: ProductItemType) => {
+const ProductItem = ({item}: ProductItemProps) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
