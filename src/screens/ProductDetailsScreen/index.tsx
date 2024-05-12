@@ -40,7 +40,7 @@ const ProductDetailsScreen = (props: {
         </Text>
         <DetailProperty />
       </ScrollView>
-      <CardButton />
+      <CardButton item={product} />
     </View>
   );
 };

@@ -1,7 +1,9 @@
 import {useNavigation} from "@react-navigation/native";
+import useRedux from "hooks/useRedux";
 import {Product} from "models";
 import {Dimensions, Image, Text, TouchableOpacity, View} from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
+import {addToCart} from "store/cart";
 
 const {height, width} = Dimensions.get("window");
 
@@ -11,6 +13,8 @@ type ProductItemProps = {
 
 const ProductItem = ({item}: ProductItemProps) => {
   const navigation = useNavigation();
+  const {dispatch} = useRedux();
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("ProductDetails", {product: item})}
@@ -69,6 +73,9 @@ const ProductItem = ({item}: ProductItemProps) => {
         {item.miktar}
       </Text>
       <TouchableOpacity
+        onPress={() => {
+          dispatch(addToCart({product: item, quantity: 1}));
+        }}
         style={{
           position: "absolute",
           borderWidth: 0.3,

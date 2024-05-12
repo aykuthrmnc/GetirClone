@@ -1,6 +1,8 @@
 import productsGetir from "assets/productsGetir";
 import CartItem from "components/CartItem";
 import ProductItem from "components/ProductItem";
+import useRedux from "hooks/useRedux";
+import {useEffect, useState} from "react";
 import {
   Dimensions,
   FlatList,
@@ -13,14 +15,24 @@ import {
 const {height} = Dimensions.get("window");
 
 const CartScreen = () => {
-  const totalPrice = 24.0;
+  const {appSelector} = useRedux();
+  const cartItems = appSelector(state => state.cart.cart);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    setTotalPrice(
+      cartItems.reduce((x, y) => x + y.product.fiyatIndirimli * y.quantity, 0),
+    );
+  }, [cartItems]);
 
   return (
     <View style={{flex: 1}}>
       <FlatList
         style={{flex: 1}}
-        data={productsGetir.slice(0, 4)}
-        renderItem={({item}) => <CartItem product={item} />}
+        data={cartItems}
+        renderItem={({item}) => (
+          <CartItem product={item.product} quantity={item?.quantity} />
+        )}
         ListFooterComponent={() => (
           <>
             <Text style={{padding: 15, fontWeight: "bold", color: "#5D3EBD"}}>

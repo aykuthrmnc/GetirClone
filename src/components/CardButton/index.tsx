@@ -1,8 +1,12 @@
+import useRedux from "hooks/useRedux";
+import {Product} from "models";
 import {View, Text, Dimensions, TouchableOpacity} from "react-native";
+import {addToCart} from "store/cart";
 
 const {height} = Dimensions.get("window");
 
-const CardButton = () => {
+const CardButton = ({item}: {item: Product}) => {
+  const {dispatch} = useRedux();
   return (
     <View
       style={{
@@ -15,6 +19,9 @@ const CardButton = () => {
         bottom: 0,
       }}>
       <TouchableOpacity
+        onPress={() => {
+          dispatch(addToCart({product: item, quantity: 1}));
+        }}
         style={{
           backgroundColor: "#5D39C1",
           height: height * 0.06,

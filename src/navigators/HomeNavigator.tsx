@@ -10,8 +10,10 @@ import {
   Route,
   getFocusedRouteNameFromRoute,
 } from "@react-navigation/native";
-import {useLayoutEffect} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import CartScreen from "screens/CartScreen";
+import useRedux from "hooks/useRedux";
+import {clearCart} from "store/cart";
 
 const {width} = Dimensions.get("window");
 
@@ -26,6 +28,16 @@ const HomeNavigator = ({
   navigation: NavigationProp<ReactNavigation.RootParamList>;
   route: Partial<Route<string>>;
 }) => {
+  const {appSelector, dispatch} = useRedux();
+  const cartItems = appSelector(state => state.cart.cart);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    setTotalPrice(
+      cartItems.reduce((x, y) => x + y.product.fiyatIndirimli * y.quantity, 0),
+    );
+  }, [cartItems]);
+
   useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
     if (tabHiddenRoutes.includes(routeName!)) {
@@ -92,7 +104,7 @@ const HomeNavigator = ({
                 }}>
                 <Text
                   style={{color: "#5D3EBD", fontWeight: "bold", fontSize: 12}}>
-                  ₺24,00
+                  ₺{totalPrice?.toFixed(2)}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -149,7 +161,9 @@ const HomeNavigator = ({
             </Text>
           ),
           headerRight: () => (
-            <TouchableOpacity style={{paddingRight: 12}}>
+            <TouchableOpacity
+              onPress={() => dispatch(clearCart())}
+              style={{paddingRight: 12}}>
               <Ionicons name="trash" size={24} color="white" />
             </TouchableOpacity>
           ),

@@ -1,13 +1,17 @@
+import useRedux from "hooks/useRedux";
 import {Product} from "models";
 import {View, Text, Image, Dimensions, TouchableOpacity} from "react-native";
+import {addToCart, removeFromCart} from "store/cart";
 
 type CartItemProps = {
   product: Product;
+  quantity: number;
 };
 
 const {width, height} = Dimensions.get("window");
 
-const CartItem = ({product}: CartItemProps) => {
+const CartItem = ({product, quantity}: CartItemProps) => {
+  const {dispatch} = useRedux();
   return (
     <View
       style={{
@@ -60,15 +64,31 @@ const CartItem = ({product}: CartItemProps) => {
               }}>
               {product.miktar}
             </Text>
-            <Text
+            <View
               style={{
-                color: "#5D3EBD",
-                fontWeight: "bold",
-                fontSize: 14,
+                flexDirection: "row",
+                alignItems: "center",
                 marginTop: 6,
               }}>
-              ₺{product.fiyat}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: "bold",
+                  color: "#747990",
+                  textDecorationLine: "line-through",
+                }}>
+                ₺{product.fiyat}
+              </Text>
+              <Text
+                style={{
+                  color: "#5D3EBD",
+                  fontWeight: "bold",
+                  fontSize: 14,
+                  marginLeft: 4,
+                }}>
+                ₺{product.fiyatIndirimli}
+              </Text>
+            </View>
           </View>
         </View>
         <View
@@ -85,7 +105,9 @@ const CartItem = ({product}: CartItemProps) => {
             shadowOpacity: 0.4,
             shadowColor: "gray",
           }}>
-          <TouchableOpacity style={{flex: 1, alignItems: "center"}}>
+          <TouchableOpacity
+            onPress={() => dispatch(removeFromCart(product))}
+            style={{flex: 1, alignItems: "center"}}>
             <Text style={{color: "#5D3EBD", fontSize: 16, fontWeight: "bold"}}>
               -
             </Text>
@@ -99,10 +121,12 @@ const CartItem = ({product}: CartItemProps) => {
               alignItems: "center",
             }}>
             <Text style={{color: "white", fontSize: 12, fontWeight: "bold"}}>
-              1
+              {quantity}
             </Text>
           </View>
-          <TouchableOpacity style={{flex: 1, alignItems: "center"}}>
+          <TouchableOpacity
+            onPress={() => dispatch(addToCart({product, quantity: 1}))}
+            style={{flex: 1, alignItems: "center"}}>
             <Text style={{color: "#5D3EBD", fontSize: 16, fontWeight: "bold"}}>
               +
             </Text>
