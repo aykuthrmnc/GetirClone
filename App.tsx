@@ -10,7 +10,12 @@ const linking = {
     screens: {
       Search: {
         screens: {
-          CartScreen: "cartScreen",
+          CartScreen: {
+            path: "cartScreen/ContentId/:contentId",
+            parse: {
+              contentId: (value: string) => `code-${value}`,
+            },
+          },
           // ProductDetails: "product/:id",
         },
       },

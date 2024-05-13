@@ -15,7 +15,7 @@ import {
 
 const {height} = Dimensions.get("window");
 
-const CartScreen = () => {
+const CartScreen = ({route}: {route: unknown}) => {
   const {appSelector} = useRedux();
   const cartItems = appSelector(state => state.cart.cart);
   const [totalPrice, setTotalPrice] = useState(0);
