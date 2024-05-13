@@ -4,10 +4,24 @@ import "react-native-gesture-handler";
 import {Provider} from "react-redux";
 import store from "store";
 
+const linking = {
+  prefixes: ["getir://"],
+  config: {
+    screens: {
+      Search: {
+        screens: {
+          CartScreen: "cartScreen",
+          // ProductDetails: "product/:id",
+        },
+      },
+    },
+  },
+};
+
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <RootNavigator />
       </NavigationContainer>
     </Provider>

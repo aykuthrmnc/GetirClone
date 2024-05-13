@@ -50,7 +50,7 @@ const RootNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Bildirimler"
+        name="Search"
         component={HomeNavigator}
         options={{
           tabBarIcon: ({color}) => (
@@ -59,14 +59,14 @@ const RootNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Sat"
+        name="List"
         component={HomeNavigator}
         options={{
           tabBarButton: props => <CustomTabBarButton {...props} />,
         }}
       />
       <Tab.Screen
-        name="Sohbet"
+        name="User"
         component={HomeNavigator}
         options={{
           tabBarIcon: ({color}) => (
@@ -75,7 +75,7 @@ const RootNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="İlanlarım"
+        name="Gift"
         component={HomeNavigator}
         options={{
           tabBarIcon: ({color}) => (

@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {
   Dimensions,
   FlatList,
+  Linking,
   ScrollView,
   Text,
   TouchableOpacity,
